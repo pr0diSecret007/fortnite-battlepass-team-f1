@@ -2,7 +2,7 @@ const races = [
     ['Australia', 'Melbourne', '8 MAR', '15:00', 'Albert Park', 'George Russell', 'George Russell | Kimi Antonelli | Charles Leclerc', 1],
     ['Cina', 'Shanghai', '15 MAR', '15:00', 'Shanghai International', 'Kimi Antonelli', 'Kimi Antonelli | George Russell | Lewis Hamilton', 1],
     ['Giappone', 'Suzuka', '29 MAR', '14:00', 'Suzuka Circuit', 'Kimi Antonelli', 'Kimi Antonelli | Oscar Piastri | Charles Leclerc', 1],
-    ['Bahrain', 'Sakhir', '12 APR', '18:00', 'Bahrain International', '—', 'Gara spostata', 1],
+    ['Malaysia', 'Sepang', '4 OTT', '15:00', 'Sepang International', '—', 'Gara non disputata', 0],
     ['Arabia Saudita', 'Jeddah', '19 APR', '20:00', 'Jeddah Corniche', '—', 'Gara non disputabile', 1],
     ['Miami', 'USA', '3 MAG', '16:00', 'Miami International', 'Kimi Antonelli', 'Kimi Antonelli | Lando Norris | Oscar Piastri', 1],
     ['Canada', 'Montreal', '24 MAG', '16:00', 'Circuit Gilles-Villeneuve', 'Kimi Antonelli', 'Kimi Antonelli | Lewis Hamilton | Max Verstappen', 1],
@@ -15,8 +15,7 @@ const races = [
     ['Paesi Bassi', 'Zandvoort', '23 AGO', '15:00', 'Circuit Zandvoort', 'Lando Norris', 'Lando Norris | Kimi Antonelli | George Russell', 1],
     ['Italia', 'Monza', '6 SET', '15:00', 'Autodromo Nazionale Monza', 'Kimi Antonelli', 'Kimi Antonelli | George Russell | Max Verstappen', 1],
     ['Spagna', 'Madrid', '13 SET', '15:00', 'Madrid IFEMA', 'Kimi Antonelli', 'Kimi Antonelli | Max Verstappen | Lando Norris', 1],
-    ['Azerbaijan', 'Baku', '26 SET', '14:00', 'Baku City Circuit', 'George Russell', 'George Russell | Max Verstappen | Isack Hadjar', 1],
-    ['Bahrain/Malesia', 'Sepang', '04 OTT', '15:00', 'Sepang International Circuit', '_', 'In attesa della gara', 0],
+    ['Azerbaijan', 'Baku', '26 SET', '14:00', 'Baku City Circuit', 'George Russel', 'George Russel | Max Verstappen | Isack Hadjar', 1],
     ['Singapore', 'Marina Bay', '11 OTT', '20:00', 'Marina Bay', '—', 'In attesa della gara', 0],
     ['USA', 'Austin', '25 OTT', '15:00', 'Circuit of the Americas', '—', 'In attesa della gara', 0],
     ['Messico', 'Mexico City', '1 NOV', '14:00', 'Autódromo Hermanos Rodríguez', '—', 'In attesa della gara', 0],
@@ -26,12 +25,12 @@ const races = [
     ['Abu Dhabi', 'Yas Marina', '6 DIC', '17:00', 'Yas Marina Circuit', '—', 'In attesa della gara', 0]
 ];
 
-// Mappa delle bandiere in base al nome della nazione (o evento)
+
 const flags = {
     'Australia': '🇦🇺',
     'Cina': '🇨🇳',
     'Giappone': '🇯🇵',
-    'Bahrain': '🇧🇭',
+    'Malaysia':'🇲🇾',
     'Arabia Saudita': '🇸🇦',
     'Miami': '🇺🇸',
     'Canada': '🇨🇦',
@@ -60,25 +59,24 @@ let only = false;
 function render() {
     box.innerHTML = '';
     races.forEach((r, i) => {
-        // Se 'only' è true, mostra solo le gare non disputate (dove r[7] === 0)
+    
         if (only && r[7] === 1) return;
 
         const country = r[0];
-        const flag = flags[country] || '🏁'; // Bandiera di fallback se non trovata
-
+        const flag = flags[country] || '🏁'; 
         box.innerHTML += `
-            <article class="race">
-                <div class="track">
-                    <span class="round">${String(i + 1).padStart(2, '0')}</span>
-                    <span class="status ${r[7] ? 'done' : 'upcoming'}">${r[7] ? '✕ TERMINATA' : '✓ DA CORRERE'}</span>
-                </div>
-                <div class="race-body">
-                    <h3>${flag} ${country.toUpperCase()}</h3>
-                    <div class="place">${r[1]} • ${r[2]}</div>
-                    <div class="meta">📍 <b>${r[4]}</b><br>🕒 Gara: <b>${r[3]} locale</b><br>🏆 Vincitore: <b>${r[5]}</b></div>
-                    <div class="podium">${r[7] ? `🥇🥈🥉 <b>TOP 3</b><br>${r[6]}` : '⏳ <b>RISULTATI</b><br>Disponibili dopo la gara'}</div>
-                </div>
-            </article>
+        <article class="race">
+        <div class="track">
+        <span class="round">${String(i + 1).padStart(2, '0')}</span>
+        <span class="status ${r[7] ? 'done' : 'upcoming'}">${r[7] ? '✕ TERMINATA' : '✓ DA CORRERE'}</span>
+        </div>
+        <div class="race-body">
+        <h3>${flag} ${country.toUpperCase()}</h3>
+        <div class="place">${r[1]} • ${r[2]}</div>
+        <div class="meta">📍 <b>${r[4]}</b><br>🕒 Gara: <b>${r[3]} locale</b><br>🏆 Vincitore: <b>${r[5]}</b></div>
+        <div class="podium">${r[7] ? `🥇🥈🥉 <b>TOP 3</b><br>${r[6]}` : '⏳ <b>RISULTATI</b><br>Disponibili dopo la gara'}</div>
+        </div>
+        </article>
         `;
     });
 }
@@ -91,7 +89,7 @@ document.getElementById('filter').onclick = () => {
     render();
 };
 
-// --- COUNTDOWN PER LA PROSSIMA GARA ---
+
 function initCountdown() {
     const mainSection = document.querySelector('main');
     if (!mainSection) return;
@@ -99,19 +97,19 @@ function initCountdown() {
     const countdownContainer = document.createElement('div');
     countdownContainer.className = 'countdown-box';
     countdownContainer.innerHTML = `
-        <div class="countdown-content">
-            <p class="eyebrow" style="margin: 0 0 5px 0;">PROSSIMO GRAN PREMIO (BAHRAIN)</p>
-            <h3 id="countdown-timer" style="font-family: 'Barlow Condensed'; font-size: 24px; margin: 0;">Caricamento conto alla rovescia...</h3>
-        </div>
+    <div class="countdown-content">
+    <p class="eyebrow" style="margin: 0 0 5px 0;">PROSSIMO GRAN PREMIO (MALESIA)</p>
+    <h3 id="countdown-timer" style="font-family: 'Barlow Condensed'; font-size: 24px; margin: 0;">Caricamento conto alla rovescia...</h3>
+    </div>
     `;
-    
+
     countdownContainer.style.cssText = `
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-left: 4px solid var(--red);
-        padding: 20px;
-        margin-bottom: 35px;
-        font-family: Inter, sans-serif;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--red);
+    padding: 20px;
+    margin-bottom: 35px;
+    font-family: Inter, sans-serif;
     `;
 
     mainSection.insertBefore(countdownContainer, mainSection.firstChild);
@@ -134,7 +132,7 @@ function initCountdown() {
 
         const timerEl = document.getElementById("countdown-timer");
         if(timerEl) {
-            timerEl.innerHTML = `🇧🇭 Mancano: <b>${days}g</b> : <b>${hours}h</b> : <b>${minutes}m</b> : <b>${seconds}s</b> al GP di Bahrain`;
+            timerEl.innerHTML = `🇲🇾 Mancano: <b>${days}g</b> : <b>${hours}h</b> : <b>${minutes}m</b> : <b>${seconds}s</b> al GP di Malesia`;
         }
     }, 1000);
 }
