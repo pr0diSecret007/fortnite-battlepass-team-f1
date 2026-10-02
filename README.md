@@ -1,8 +1,8 @@
-# Fortnite Battle Pass - Team F1 🏎️🎮
+# Formula 1 calendar - Team F1 🏎️
 
 Un'applicazione web interattiva dedicata al Battle Pass di Fortnite, personalizzata con il tema del Team F1. Il progetto permette di esplorare i contenuti del pass e guardare video o stream dedicati tramite un'interfaccia pulita e reattiva.
 
-## 🚀 Funzionalità
+##  Funzionalità
 
 - **Home Page Interattiva**: Un'interfaccia curata per visualizzare i dettagli del Battle Pass (`index.html`).
 - **Area Streaming/Video**: Una pagina dedicata (`watch.html`) per guardare i contenuti multimediali.
